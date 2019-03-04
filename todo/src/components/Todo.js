@@ -5,7 +5,11 @@ import { markComplete, deleteTodo } from "../store/actions/actions";
 const Todo = props => {
   return (
     <div className="todo-container">
-      <span>{props.todo}</span>
+      {props.completed ? (
+        <span style={{ textDecoration: "line-through" }}>{props.todo}</span>
+      ) : (
+        <span>{props.todo}</span>
+      )}
       <button onClick={() => props.markComplete(props.id)}>Completed</button>
       <button onClick={() => props.deleteTodo(props.id)}>Delete</button>
     </div>

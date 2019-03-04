@@ -1,46 +1,61 @@
-const initial = {
-  todos: [
-    {
-      task: "Take out trash",
-      completed: false
-    },
-    {
-      task: "Feed the dogs",
-      completed: false
-    },
-    {
-      task: "Learn to code",
-      completed: false
+const getTodos = () => {
+  let todos = localStorage.getItem("todos");
+  if (todos) {
+    try {
+      todos = JSON.parse(todos);
+    } catch (e) {
+      todos = [];
     }
-  ]
+  } else {
+    todos = [];
+  }
+
+  return {
+    todos
+  };
 };
 
+const initial = getTodos();
+
 export default (state = initial, action) => {
+  let newTodos = [];
   switch (action.type) {
     case "ADD_TODO":
+      newTodos = [...state.todos, action.payload];
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
       return {
         ...state,
-        todos: [...state.todos, action.payload]
+        todos: newTodos
       };
     case "MARK_COMPLETE":
+      newTodos = state.todos.map((todo, index) => {
+        if (index === action.payload) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
       return {
         ...state,
-        todos: state.todos.map((todo, index) => {
-          if (index === action.payload) {
-            todo.completed = !todo.completed;
-          }
-          return todo;
-        })
+        todos: newTodos
       };
     case "REMOVE_COMPLETED":
+      newTodos = state.todos.filter(todo => !todo.completed);
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
       return {
         ...state,
-        todos: state.todos.filter(todo => !todo.completed)
+        todos: newTodos
       };
     case "DELETE_TODO":
+      newTodos = state.todos.filter((todo, index) => index !== action.payload);
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
       return {
         ...state,
-        todos: state.todos.filter((todo, index) => index !== action.payload)
+        todos: newTodos
       };
     default:
       return state;
