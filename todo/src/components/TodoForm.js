@@ -7,17 +7,20 @@ const TodoForm = props => {
 
   const sendTodo = e => {
     e.preventDefault();
-    const payload = {
-      task,
-      completed: false
-    };
-    props.addTodo(payload);
-    updateTask("");
+    if (task !== "") {
+      const payload = {
+        task,
+        completed: false
+      };
+      props.addTodo(payload);
+      updateTask("");
+    }
   };
 
   return (
     <form onSubmit={sendTodo} className="todo-form">
       <input
+        value={task}
         onChange={e => updateTask(e.target.value)}
         placeholder="What to do?"
       />

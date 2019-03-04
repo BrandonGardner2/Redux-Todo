@@ -37,6 +37,11 @@ export default (state = initial, action) => {
         ...state,
         todos: state.todos.filter(todo => !todo.completed)
       };
+    case "DELETE_TODO":
+      return {
+        ...state,
+        todos: state.todos.filter((todo, index) => index !== action.payload)
+      };
     default:
       return state;
   }
