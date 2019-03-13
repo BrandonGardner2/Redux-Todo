@@ -17,3 +17,10 @@ export const removeCompleted = () => {
     type: "REMOVE_COMPLETED"
   };
 };
+
+export const deleteTodo = id => {
+  return {
+    type: "DELETE_TODO",
+    payload: id
+  };
+};

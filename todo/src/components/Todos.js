@@ -8,7 +8,14 @@ const Todos = props => {
     <div className="todos-container">
       <button onClick={props.removeCompleted}>Remove Completed</button>
       {props.todos.map((todo, index) => {
-        return <Todo key={index} todo={todo.task} id={index} />;
+        return (
+          <Todo
+            key={index}
+            todo={todo.task}
+            completed={todo.completed}
+            id={index}
+          />
+        );
       })}
     </div>
   );
